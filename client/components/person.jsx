@@ -67,11 +67,6 @@ function Person() {
             });
             console.log(response1);
 
-            if (response1.status != 200) {
-                alert("An error occured.  Please try again later.");
-                return;
-            }
-
             if ((response1.data.result.verdict.addressComplete && response1.data.result.verdict.addressComplete == true) || response1.data.result.verdict.validationGranularity != "OTHER") {
 
                 if (confirm("Would you like to use this address?\n " + response1.data.result.address.formattedAddress)) {
@@ -179,11 +174,6 @@ function Person() {
                 }
             });
             console.log(response1);
-
-            if (response1.status != 200) {
-                alert("an error occured.");
-                return;
-            }
 
             if ((response1.data.result.verdict.addressComplete && response1.data.result.verdict.addressComplete == true) || response1.data.result.verdict.validationGranularity != "OTHER") {
 
