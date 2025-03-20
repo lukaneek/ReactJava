@@ -1,6 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useState, useEffect } from "react";
-import axios from "axios"
+import axios from "axios";
 
 function Person() {
 
@@ -68,14 +68,15 @@ function Person() {
             console.log(response1);
 
             if (response1.status != 200) {
-                alert("an error occured.");
+                alert("An error occured.  Please try again later.");
                 return;
             }
 
             if ((response1.data.result.verdict.addressComplete && response1.data.result.verdict.addressComplete == true) || response1.data.result.verdict.validationGranularity != "OTHER") {
 
                 if (confirm("Would you like to use this address?\n " + response1.data.result.address.formattedAddress)) {
-                    axios.post("http://localhost:8080/person", {
+
+                    const response2 = await axios.post("http://localhost:8080/person", {
                         firstName: addPerson.firstName,
                         lastName: addPerson.lastName,
                         age: addPerson.age,
@@ -84,26 +85,22 @@ function Person() {
                         city: response1.data.result.address.postalAddress.locality,
                         state: response1.data.result.address.postalAddress.administrativeArea,
                         zipCode: response1.data.result.address.postalAddress.postalCode
-                    })
-                        .then((res) => {
-                            console.log(res);
-                            setAddPerson({
-                                firstName: "",
-                                lastName: "",
-                                age: "",
-                                address1: "",
-                                address2: "",
-                                city: "",
-                                state: "",
-                                zipCode: ""
-                            });
-                            setChange(!change);
-                            alert("created person!");
-                        })
-                        .catch((e) => {
-                            console.log(e);
-                            alert("issue creating person");
-                        })
+                    });
+
+                    console.log(response2);
+
+                    setAddPerson({
+                        firstName: "",
+                        lastName: "",
+                        age: "",
+                        address1: "",
+                        address2: "",
+                        city: "",
+                        state: "",
+                        zipCode: ""
+                    });
+                    setChange(!change);
+                    alert("Successfully created person!");
                 }
             }
             else {
@@ -112,11 +109,17 @@ function Person() {
             }
         }
         catch (e) {
+            if (e.status == 422) {
+                const messages = e.response.data.details.map((error, index) => {
+                    return error + "\n";
+                })
+                alert(messages);
+            }
+            else {
+                alert("Something went wrong creating a user.  Please try again later.");
+            }
             console.log(e);
-            alert("issue creating person.");
-            return;
         }
-
     }
 
     function deletePerson(e, id) {
@@ -129,8 +132,8 @@ function Person() {
                 alert("Deleted Person!");
             })
             .catch((e) => {
+                alert("Something went wrong deleting a user.  Please try again later.");
                 console.log(e);
-                alert("issue deleting person");
             })
     }
 
@@ -152,8 +155,13 @@ function Person() {
                 });
             })
             .catch((e) => {
+                if (e.response && e.response.status == 404) {
+                    alert("User wasn't able to be found.");
+                }
+                else {
+                    alert("Something went wrong finding a user.  Please try again later.");
+                }
                 console.log(e);
-                alert("issue finding person");
             })
     }
 
@@ -180,7 +188,7 @@ function Person() {
             if ((response1.data.result.verdict.addressComplete && response1.data.result.verdict.addressComplete == true) || response1.data.result.verdict.validationGranularity != "OTHER") {
 
                 if (confirm("Would you like to use this address?\n " + response1.data.result.address.formattedAddress)) {
-                    axios.put("http://localhost:8080/person", {
+                    const response2 = await axios.put("http://localhost:8080/person", {
                         id: updatePerson.id,
                         firstName: updatePerson.firstName,
                         lastName: updatePerson.lastName,
@@ -190,27 +198,24 @@ function Person() {
                         city: response1.data.result.address.postalAddress.locality,
                         state: response1.data.result.address.postalAddress.administrativeArea,
                         zipCode: response1.data.result.address.postalAddress.postalCode
-                    })
-                        .then((res) => {
-                            console.log(res);
-                            setUpdatePerson({
-                                id: "",
-                                firstName: "",
-                                lastName: "",
-                                age: "",
-                                address1: "",
-                                address2: "",
-                                city: "",
-                                state: "",
-                                zipCode: ""
-                            });
-                            setChange(!change);
-                            alert("updating person!");
-                        })
-                        .catch((e) => {
-                            console.log(e);
-                            alert("issue updating person");
-                        })
+                    });
+
+                    console.log(response2);
+
+                    setUpdatePerson({
+                        id: "",
+                        firstName: "",
+                        lastName: "",
+                        age: "",
+                        address1: "",
+                        address2: "",
+                        city: "",
+                        state: "",
+                        zipCode: ""
+                    });
+                    setChange(!change);
+                    alert("Successfully updated person!");
+
                 }
             }
             else {
@@ -219,9 +224,19 @@ function Person() {
             }
         }
         catch (e) {
+            if (e.status == 404) {
+                alert("User wasn't able to be found.");
+            }
+            else if (e.status == 422) {
+                const messages = e.response.data.details.map((error, index) => {
+                    return error + "\n";
+                })
+                alert(messages);
+            }
+            else {
+                alert("Something went wrong updating a user.  Please try again later.");
+            }
             console.log(e);
-            alert("issue updating person.");
-            return;
         }
     }
 

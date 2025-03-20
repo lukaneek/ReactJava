@@ -18,30 +18,28 @@ public class Person {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@NotEmpty(message = "Enter Your First Name")
-	@Size(min = 3, max = 30, message = "First Name must be between 3 and 30 characters")
+	@NotEmpty(message = "Must Enter Your First Name.")
 	private String firstName;
 	
-	@NotEmpty(message = "Enter Your Last Name")
-	@Size(min = 3, max = 30, message = "Last Name must be between 3 and 30 characters")
+	@NotEmpty(message = "Must Enter Your Last Name.")
 	private String lastName;
 	
-	@NotNull(message = "Please Enter you age.")
+	@NotNull(message = "Must Enter Your Age.")
 	@Min(value = 1, message = "Age must be greater than 0.")
 	private Integer age;
 	
-	@NotEmpty(message = "Enter Your Address")
+	@NotEmpty(message = "Must Enter Your Address.")
 	private String address1;
 	
 	private String address2;
 	
-	@NotEmpty(message = "Enter Your City")
+	@NotEmpty(message = "Must Enter Your City.")
 	private String city;
 	
-	@NotEmpty(message = "Enter Your State")
+	@NotEmpty(message = "Must Enter Your State.")
 	private String state;
 	
-	@NotEmpty(message = "Enter Your Zip Code")
+	@NotEmpty(message = "Must Enter Your Zip Code.")
 	private String zipCode;
 	
 	public Person() {}
