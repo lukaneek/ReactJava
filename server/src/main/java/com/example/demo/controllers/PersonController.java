@@ -19,7 +19,7 @@ import com.example.demo.services.PersonService;
 
 import jakarta.validation.Valid;
 
-@CrossOrigin(origins = {"http://localhost:5173", "http://localhost:3000"})
+@CrossOrigin(origins = {"http://localhost:5173", "https://lukavujasin.xyz"})
 @RestController
 public class PersonController {
 
