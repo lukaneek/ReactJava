@@ -1,6 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import AboutThisApp from "./aboutThisApp";
 
 function Person() {
 
@@ -232,9 +233,12 @@ function Person() {
 
     return (
         <div>
+            <div style={{ paddingTop: 25, paddingLeft: 30, width: 1000 }}>
+                <AboutThisApp />
+            </div>
             <div style={{ width: 1000 }} className="d-flex justify-content-center mx-auto">
                 <div className="login template d-flex justify-content-center align-items-center 100-w 100-vh bg primary" >
-                    <div style={{ paddingTop: 100, paddingRight: 200 }}>
+                    <div style={{ paddingTop: 25, paddingRight: 200 }}>
                         <h1 class="text-center">Create Person</h1>
                         <form action="POST">
 
@@ -282,7 +286,7 @@ function Person() {
                     </div>
                 </div>
                 <div className="login template d-flex justify-content-center align-items-center 100-w 100-vh bg primary" >
-                    <div style={{ paddingTop: 100 }}>
+                    <div style={{ paddingTop: 25 }}>
                         <h1 class="text-center">Update Person</h1>
                         <form action="PUT">
 
