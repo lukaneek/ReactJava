@@ -29,7 +29,7 @@ function Person() {
     const [change, setChange] = useState(false);
 
     useEffect(() => {
-        axios.get("http://localhost:8080/persons", {})
+        axios.get(`${import.meta.env.VITE_BASE_SERVER_URL}/persons`, {})
 
             .then((res) => {
                 setPeople(res.data);
@@ -71,7 +71,7 @@ function Person() {
 
                 if (confirm("Would you like to use this address?\n " + response1.data.result.address.formattedAddress)) {
 
-                    const response2 = await axios.post("http://localhost:8080/person", {
+                    const response2 = await axios.post(`${import.meta.env.VITE_BASE_SERVER_URL}/person`, {
                         firstName: addPerson.firstName,
                         lastName: addPerson.lastName,
                         age: addPerson.age,
@@ -119,7 +119,7 @@ function Person() {
 
     function deletePerson(e, id) {
         e.preventDefault();
-        axios.delete("http://localhost:8080/person/" + id, {})
+        axios.delete(`${import.meta.env.VITE_BASE_SERVER_URL}/person/` + id, {})
 
             .then((res) => {
                 console.log(res);
@@ -134,7 +134,7 @@ function Person() {
 
     function findPerson(e, id) {
         e.preventDefault();
-        axios.get("http://localhost:8080/person/" + id, {})
+        axios.get(`${import.meta.env.VITE_BASE_SERVER_URL}/person/` + id, {})
 
             .then((res) => {
                 setUpdatePerson({
@@ -178,7 +178,7 @@ function Person() {
             if ((response1.data.result.verdict.addressComplete && response1.data.result.verdict.addressComplete == true) || response1.data.result.verdict.validationGranularity != "OTHER") {
 
                 if (confirm("Would you like to use this address?\n " + response1.data.result.address.formattedAddress)) {
-                    const response2 = await axios.put("http://localhost:8080/person", {
+                    const response2 = await axios.put(`${import.meta.env.VITE_BASE_SERVER_URL}/person`, {
                         id: updatePerson.id,
                         firstName: updatePerson.firstName,
                         lastName: updatePerson.lastName,
