@@ -57,14 +57,12 @@ function Person() {
     async function createPerson(e) {
         e.preventDefault();
         try {
-            const response1 = await axios.post(`${import.meta.env.VITE_GOOGLE_APIKEY}`, {
-                address: {
-                    regionCode: "US",
-                    locality: addPerson.city,
-                    administrativeArea: addPerson.state,
-                    postalCode: addPerson.zipCode,
-                    addressLines: [addPerson.address1 + " " + addPerson.address2]
-                }
+            const response1 = await axios.post(`${import.meta.env.VITE_BASE_SERVER_URL}/validate`, {
+                address1: addPerson.address1,
+                address2: addPerson.address2,
+                city: addPerson.city,
+                state: addPerson.state,
+                zipCode: addPerson.zipCode
             });
             console.log(response1);
 
@@ -165,14 +163,12 @@ function Person() {
         e.preventDefault();
 
         try {
-            const response1 = await axios.post(`${import.meta.env.VITE_GOOGLE_APIKEY}`, {
-                address: {
-                    regionCode: "US",
-                    locality: updatePerson.city,
-                    administrativeArea: updatePerson.state,
-                    postalCode: updatePerson.zipCode,
-                    addressLines: [updatePerson.address1 + " " + updatePerson.address2]
-                }
+            const response1 = await axios.post(`${import.meta.env.VITE_BASE_SERVER_URL}/validate`, {
+                address1: updatePerson.address1,
+                address2: updatePerson.address2,
+                city: updatePerson.city,
+                state: updatePerson.state,
+                zipCode: updatePerson.zipCode
             });
             console.log(response1);
 

@@ -1,8 +1,13 @@
 package com.example.demo.controllers;
 
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -16,6 +21,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.models.Person;
 import com.example.demo.services.PersonService;
+import com.example.demo.utils.Address;
+import com.example.demo.utils.GoogleValidationInput;
+import com.google.gson.Gson;
 
 import jakarta.validation.Valid;
 
@@ -25,6 +33,9 @@ public class PersonController {
 
 	@Autowired
 	PersonService personServ;
+	
+	@Value("${app.google.apikey}")
+	private String googleApiKey;
 
 	@PostMapping("/person")
 	public ResponseEntity<Long> createPerson(@Valid @RequestBody Person person) {
@@ -58,6 +69,36 @@ public class PersonController {
 	public ResponseEntity<String> deletePerson(@PathVariable("id") Long id) {
 		personServ.deletePerson(id);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	}
+	
+	@PostMapping("/validate")
+	public ResponseEntity<String> addressValidation(@RequestBody Address address) {
+		GoogleValidationInput input = new GoogleValidationInput();
+		input.setAddressLines(new String[] {address.getAddress1() + " " + address.getAddress2()});
+		input.setLocality(address.getCity());
+		input.setAdministrativeArea(address.getState());
+		input.setPostalCode(address.getZipCode());
+		
+		String jsonInput = new Gson().toJson(input);
+		jsonInput = "{\"address\":" + jsonInput + "}";
+		
+		HttpClient client = HttpClient.newBuilder().build();
+		HttpRequest request = HttpRequest.newBuilder()
+				.uri(URI.create("https://addressvalidation.googleapis.com/v1:validateAddress?key=" + googleApiKey))
+				.header("Content-Type", "application/json")
+				.POST(HttpRequest.BodyPublishers.ofString(jsonInput))
+				.build();
+		
+		HttpResponse<String> response = null;
+		
+		try {
+			response = client.send(request, HttpResponse.BodyHandlers.ofString());
+		}
+		catch(Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+		return new ResponseEntity<>(response.body(), HttpStatus.OK); 
 	}
 
 }
