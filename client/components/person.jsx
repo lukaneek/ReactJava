@@ -329,10 +329,10 @@ function Person() {
                     </div>
                 </div>
             </div>
-            <div class="d-flex justify-content-center mx-auto">
+            <div style={{ width: 1000 }} className="d-flex justify-content-center mx-auto">
                 <div style={{ paddingTop: 50 }}>
                     <h2>People</h2>
-                    <table style={{ width: 1000 }} class="table table-striped">
+                    <table class="table table-striped">
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
