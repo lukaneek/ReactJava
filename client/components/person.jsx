@@ -332,18 +332,13 @@ function Person() {
             <div class="d-flex justify-content-center">
                 <div style={{ paddingTop: 50 }}>
                     <h2>People</h2>
-                    <table style={{ width: 1500 }} class="table table-striped">
+                    <table style={{ width: 1000 }} class="table table-striped">
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">First Name</th>
-                                <th scope="col">Last Name</th>
+                                <th scope="col">Name</th>
                                 <th scope="col">Age</th>
                                 <th scope="col">Address</th>
-                                <th scope="col">City</th>
-                                <th scope="col">State</th>
-                                <th scope="col">Zip Code</th>
-                                <th scope="col"></th>
                                 <th scope="col"></th>
                             </tr>
                         </thead>
@@ -353,15 +348,10 @@ function Person() {
                                 people.map((person, index) => (
                                     <tr>
                                         <td>{index + 1}</td>
-                                        <td>{person.firstName}</td>
-                                        <td>{person.lastName}</td>
+                                        <td>{person.firstName + " " + person.lastName}</td>
                                         <td>{person.age}</td>
-                                        <td>{person.address1}</td>
-                                        <td>{person.city}</td>
-                                        <td>{person.state}</td>
-                                        <td>{person.zipCode}</td>
-                                        <td><button class="btn btn-primary" onClick={(e) => findPerson(e, person.id)}>Edit</button></td>
-                                        <td><button class="btn btn-danger" onClick={(e) => deletePerson(e, person.id)}>Delete</button></td>
+                                        <td>{person.address1 + ", " + person.city + ", " + person.state + " " + person.zipCode}</td>
+                                        <td><button class="btn btn-primary" onClick={(e) => findPerson(e, person.id)}>Edit</button> <button class="btn btn-danger" onClick={(e) => deletePerson(e, person.id)}>Delete</button></td>
                                     </tr>
                                 ))
                             }
