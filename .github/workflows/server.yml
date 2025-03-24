@@ -25,7 +25,9 @@ jobs:
     - name: Build the Docker image
       uses: docker/build-push-action@v6
       with: 
-        tags: lukaneek/reactjava-server:latest
+        context: .
+        push: true
+        tags: lukaneek/reactjava-server:latest .
         secrets: |
           "app_google_apikey=${{secrets.APP_GOOGLE_APIKEY}}"
 
