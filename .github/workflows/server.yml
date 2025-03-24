@@ -23,9 +23,7 @@ jobs:
         DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
       run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
     - name: Build the Docker image
-      env: 
-        app_google_apikey: ${{secrets.APP_GOOGLE_APIKEY}}
-      run: docker build --secret id=app_google_apikey -t lukaneek/reactjava-server:latest .
+      run: docker build --secret id=app_google_apikey,src=${{secrets.APP_GOOGLE_APIKEY}} -t lukaneek/reactjava-server:latest .
     - name: Push to Dockerhub
       run: docker push lukaneek/reactjava-server:latest
 
