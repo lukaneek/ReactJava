@@ -8,6 +8,8 @@ COPY src ./src
 RUN --mount=type=secret,id=app_google_apikey,env=app_google_apikey 
 RUN mvn clean package -DskipTests
 
+
+
 # Stage 2: Run the application
 FROM openjdk:17-jdk-slim
 COPY --from=builder /app/target/*.jar app.jar
