@@ -9,6 +9,8 @@ RUN --mount=type=secret,id=app_google_apikey,dst=/tmp/app_google_apikey.txt \
     sh -c 'export app_google_apikey=$(cat /tmp/app_google_apikey.txt)' 
 RUN mvn clean package -DskipTests
 
+
+
 # Stage 2: Run the application
 FROM openjdk:17-jdk-slim
 COPY --from=builder /app/target/*.jar app.jar
