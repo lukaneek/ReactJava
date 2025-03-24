@@ -221,7 +221,12 @@ function Person() {
                 alert(messages);
             }
             else {
-                alert("Something went wrong updating a user.  Please try again later.");
+                if (e.response.data.error) {
+                    alert("Something went wrong updating a user. " + e.response.data.error.message);
+                }
+                else {
+                    alert("Something went wrong updating a user.  Please try again later.");
+                }
             }
             console.log(e);
         }

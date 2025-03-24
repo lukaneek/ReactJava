@@ -84,7 +84,7 @@ public class PersonController {
 		
 		HttpClient client = HttpClient.newBuilder().build();
 		HttpRequest request = HttpRequest.newBuilder()
-				.uri(URI.create("https://addressvalidation.googleapis.com/v1:validateAddress?key=" + googleApiKey))
+				.uri(URI.create("https://addressvalidation.googleapis.com/v1:validateAddress?key=" + "googleApiKey"))
 				.header("Content-Type", "application/json")
 				.POST(HttpRequest.BodyPublishers.ofString(jsonInput))
 				.build();
@@ -96,9 +96,10 @@ public class PersonController {
 		}
 		catch(Exception e) {
 			System.out.println(e.getMessage());
+			return new ResponseEntity<>("An unexpected error occured.", HttpStatus.INTERNAL_SERVER_ERROR); 
 		}
 		
-		return new ResponseEntity<>(response.body(), HttpStatus.OK); 
+		return new ResponseEntity<>(response.body(), HttpStatus.resolve(response.statusCode())); 
 	}
 
 }
