@@ -23,9 +23,13 @@ jobs:
         DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
       run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
     - name: Build the Docker image
-      run: docker build -t lukaneek/reactjava-server:latest .
-    - name: Push to Dockerhub
-      run: docker push lukaneek/reactjava-server:latest
+      uses: docker/build-push-action@v6
+      with: 
+        context: .
+        push: true
+        tags: lukaneek/reactjava-server:latest
+        secrets: |
+          "app_google_apikey=${{secrets.APP_GOOGLE_APIKEY}}"
 
   deploy:
     needs: build

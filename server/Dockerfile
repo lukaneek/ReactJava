@@ -4,7 +4,10 @@ WORKDIR /app
 COPY pom.xml .
 RUN mvn dependency:go-offline
 COPY src ./src
-RUN mvn clean package -DskipTests -Dspring.config.location=application.properties -Dapp.google.apikey=${{secrets.APP_GOOGLE_APIKEY}}
+# Mount secrets
+RUN --mount=type=secret,id=app_google_apikey,dst=/tmp/app_google_apikey.txt \
+    sh -c 'export app_google_apikey=$(cat /tmp/app_google_apikey.txt)' 
+RUN mvn clean package -DskipTests
 
 # Stage 2: Run the application
 FROM openjdk:17-jdk-slim

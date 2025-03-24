@@ -34,7 +34,7 @@ public class PersonController {
 	@Autowired
 	PersonService personServ;
 	
-	@Value("${app.google.apikey}")
+	@Value("${app_google_apikey}")
 	private String googleApiKey;
 
 	@PostMapping("/person")
