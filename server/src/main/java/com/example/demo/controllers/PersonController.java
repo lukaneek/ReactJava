@@ -84,7 +84,7 @@ public class PersonController {
 		
 		HttpClient client = HttpClient.newBuilder().build();
 		HttpRequest request = HttpRequest.newBuilder()
-				.uri(URI.create("https://addressvalidation.googleapis.com/v1:validateAddress?key=" + "googleApiKey"))
+				.uri(URI.create("https://addressvalidation.googleapis.com/v1:validateAddress?key=" + googleApiKey))
 				.header("Content-Type", "application/json")
 				.POST(HttpRequest.BodyPublishers.ofString(jsonInput))
 				.build();
