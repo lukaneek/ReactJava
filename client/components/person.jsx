@@ -42,6 +42,7 @@ function Person() {
 
     function handleAddInputChange(e) {
         const { name, value } = e.target;
+        console.log(name + " " + value);
         setAddPerson(prevAddPerson => ({
             ...prevAddPerson, [name]: value
         }));
