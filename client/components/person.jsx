@@ -160,10 +160,14 @@ function Person() {
             })
     }
 
-    async function updateSomeone(e) {
+    async function updateSomeone(e, id) {
         e.preventDefault();
-
-        try {
+        console.log(updatePerson);
+        try {  
+            if (id == '') {
+                alert("Must update an existing user.");
+                return;
+            }
             const response1 = await axios.post(`${import.meta.env.VITE_BASE_SERVER_URL}/validate`, {
                 address1: updatePerson.address1,
                 address2: updatePerson.address2,
@@ -209,7 +213,7 @@ function Person() {
             else {
                 alert("The address is not valid.  Please update and save again.");
                 return;
-            }
+            }   
         }
         catch (e) {
             if (e.status == 404) {
@@ -255,7 +259,7 @@ function Person() {
                             </div>
 
                             <div data-mdb-input-init class="form-outline mb-4">
-                                <input type="number" id="form2Example2" name="age" value={addPerson.age} onChange={(e) => { handleAddInputChange(e) }} class="form-control" />
+                                <input type="number" id="form2Example2" name="age" value={addPerson.age} onChange={(e) => { handleAddInputChange(e) }} class="form-control" min="1" />
                                 <label class="form-label" for="form2Example2">Age<span style={{ color: "red" }}> *</span></label>
                             </div>
                             <div data-mdb-input-init class="form-outline mb-4">
@@ -302,7 +306,7 @@ function Person() {
                                 <label class="form-label" for="form2Example2">Last Name<span style={{ color: "red" }}> *</span></label>
                             </div>
                             <div data-mdb-input-init class="form-outline mb-4">
-                                <input type="number" id="form2Example2" name="age" value={updatePerson.age} onChange={(e) => { handleUpdateInputChange(e) }} class="form-control" />
+                                <input type="number" id="form2Example2" name="age" value={updatePerson.age} onChange={(e) => { handleUpdateInputChange(e) }} class="form-control" min="1"/>
                                 <label class="form-label" for="form2Example2">Age<span style={{ color: "red" }}> *</span></label>
                             </div>
                             <div data-mdb-input-init class="form-outline mb-4">
@@ -329,7 +333,7 @@ function Person() {
                                 <label class="form-label" for="form2Example2">Zip Code<span style={{ color: "red" }}> *</span></label>
                             </div>
                             <div class=" d-flex justify-content-center align-items-center">
-                                <   button type="submit" onClick={(e) => updateSomeone(e)} data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block mb-4">Update</button>
+                                <   button type="submit" onClick={(e) =>  updateSomeone(e, updatePerson.id)} data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block mb-4">Update</button>
                             </div>
                         </form>
                     </div>
